@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import sanityClient from "../client.js";
-import { createClient } from "@sanity/client";
-
 
 export default function Games() {
     const [games, setGames] = useState([]);
