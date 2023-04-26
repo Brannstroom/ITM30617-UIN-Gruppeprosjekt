@@ -27,10 +27,7 @@ export default defineType({
         defineField({
             name: 'image',
             title: 'Image',
-            type: 'image',
-            options: {
-                hotspot: true,
-            },
+            type: 'string',
         }),
         defineField({
             name: 'categories',
@@ -54,8 +51,8 @@ export default defineType({
             type: 'text',
         }),
         defineField({
-            name: 'Developers',
-            title: 'developers',
+            name: 'developers',
+            title: 'Developers',
             type: 'string',
         }),
         defineField({
