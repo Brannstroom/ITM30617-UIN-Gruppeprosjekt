@@ -28,7 +28,9 @@ const Sidebar = () => {
   return (
     <div className="fixed top-0 left-0 h-full w-72 bg-gray-800">
       <div className="border-b border-gray-700 h-14 items-center flex">
+        <a href="/" className="w-11/12 m-auto">
         <img src={logo} alt="logo" className="w-11/12 m-auto" />
+        </a>
       </div>
 
       <nav className="flex flex-col flex-1 mt-4 text-2xl text-gray-200  w-4/6 m-auto">
