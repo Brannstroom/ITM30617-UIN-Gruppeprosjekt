@@ -8,7 +8,8 @@ export default function Games() {
 
   useEffect(() => {
     SanityClient.fetch(
-      `*[_type == "game"]{
+      `*[_type == "game"]
+      ["${category}" in categories[]->slug.current]{
         id,
         title,
         slug,
