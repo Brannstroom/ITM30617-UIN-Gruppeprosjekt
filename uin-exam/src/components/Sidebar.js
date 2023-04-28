@@ -66,15 +66,17 @@ const Sidebar = () => {
           Library
         </a>
       </nav>
-
-      <div>
-        <a
-          href="/login"
-          className="absolute bottom-0 left-0 w-full border-t border-gray-700 h-14 flex items-center justify-center text-2xl text-gray-200 hover:text-gray-400"
-        >
-          Login
-        </a>
-      </div>
+        <div>
+        {localStorage.getItem("user") !== null ? (
+          <a href="/logout" className="absolute bottom-0 left-0 w-full border-t border-gray-700 h-14 flex items-center justify-center text-2xl text-gray-200 hover:text-gray-400">
+            Logout
+            </a>
+            ) : (
+              <a href="/login" className="absolute bottom-0 left-0 w-full border-t border-gray-700 h-14 flex items-center justify-center text-2xl text-gray-200 hover:text-gray-400">
+                Login
+                </a>
+                )}
+          </div>
     </div>
   );
 };
