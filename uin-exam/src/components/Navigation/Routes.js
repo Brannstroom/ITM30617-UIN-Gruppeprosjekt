@@ -1,11 +1,11 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 
-import Home from './Home'
-import Games from './Games'
-import Game from './Game'
-import Library from './Library'
-import Login from './Login'
+import Home from '../Home'
+import Games from '../Games'
+import Game from '../Game'
+import Library from '../Library'
+import Login from '../Login'
 
 const RoutesComp = () => {
   return (

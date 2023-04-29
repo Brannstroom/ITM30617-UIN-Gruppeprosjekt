@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { getCategories } from "../api/category";
+import { getCategories } from "../../api/category";
 
-import logo from "../images/macslogo_white.png";
-import { ChevronDown } from "../icons/ChevronDown";
-import { ChevronRight } from "../icons/ChevronRight";
-import { isUserLoggedIn } from "../utils/login";
+import logo from "../../images/macslogo_white.png";
+import { ChevronDown } from "../../icons/ChevronDown";
+import { ChevronRight } from "../../icons/ChevronRight";
+import { isUserLoggedIn } from "../../utils/login";
+import { LoginCard } from "../LoginCard";
 
 const Sidebar = () => {
   const [storeDropDown, setStoreDropDown] = useState(false);
@@ -63,17 +64,8 @@ const Sidebar = () => {
         </a>
       ) : null}
       </nav>
-        <div>
-        {isUserLoggedIn ? (
-          <a href="/logout" className="absolute bottom-0 left-0 w-full border-t border-gray-700 h-14 flex items-center justify-center text-2xl text-gray-200 hover:text-gray-400">
-            Logout
-            </a>
-            ) : (
-              <a href="/login" className="absolute bottom-0 left-0 w-full border-t border-gray-700 h-14 flex items-center justify-center text-2xl text-gray-200 hover:text-gray-400">
-                Login
-                </a>
-                )}
-          </div>
+
+      <LoginCard />
     </div>
   );
 };
