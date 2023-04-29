@@ -12,6 +12,7 @@ export default function Login() {
         SanityClient.fetch(
             `*[_type == "user"]
             [username == "${username}" && password == "${password}"]{
+                "ref": _id,
                 id,
                 email,
                 username,

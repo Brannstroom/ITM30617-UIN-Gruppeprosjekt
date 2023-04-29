@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getGames } from "../api/game";
+import { getGames, handleCreate } from "../api/game";
 import { getCategories } from "../api/category";
 export default function Games() {
   const { category } = useParams();
@@ -8,8 +8,9 @@ export default function Games() {
   const [categories, setCategories] = useState([]);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
-  const handlePurchase = () => {
+  const handlePurchase = (game) => {
     setShowConfirmation(true);
+    handleCreate(game, JSON.parse(localStorage.getItem("user")))
   };
 
   useEffect(() => {
@@ -47,7 +48,7 @@ export default function Games() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-4">
         {games.map(
           (game) =>
-            console.log(game) || (
+            (
               <div
                 key={game.id}
                 className="shadow-lg hover:shadow-2xl rounded-xl flex flex-col"
@@ -83,7 +84,7 @@ export default function Games() {
                   </span>
                   <button
                     className="bg-sky-900 rounded-r-md p-1"
-                    onClick={handlePurchase}
+                    onClick={() => handlePurchase(game)}
                   >
                     {game.price ? `Purchase` : `Free`}
                   </button>
