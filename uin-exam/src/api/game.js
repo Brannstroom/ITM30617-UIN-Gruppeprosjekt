@@ -79,4 +79,38 @@ export const handleCreate = async (game, user, isFavorite=true, hoursPlayed=0) =
   }
 };
 
+export const getUserGames = async (user) => {
+  const query = `*[_type == "myGame" && user._ref == "${user[0].ref}"]{
+    "ref": _id,
+    id,
+    game->{
+      title,
+      slug,
+      image,
+      categories[]->{
+        title,
+        slug,
+      },
+      releaseDate,
+      rating,
+      summary,
+      description,
+      developers,
+      publisher,
+      platforms,
+      stores,
+      price,
+    },
+    user->{
+      name,
+      email,
+      ref,
+    },
+    isFavorite,
+    hoursPlayed,
+  }`;
+  const data = await sanityClient.fetch(query);
+  return data;
+};
+
 
