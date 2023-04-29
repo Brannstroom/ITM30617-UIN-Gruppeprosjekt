@@ -4,11 +4,12 @@ import { getCategories } from "../api/category";
 import logo from "../images/macslogo_white.png";
 import { ChevronDown } from "../icons/ChevronDown";
 import { ChevronRight } from "../icons/ChevronRight";
-import { isUserLoggedIn } from "../utils/login";
+import { isUserLoggedIn, logout } from "../utils/login";
 
 const Sidebar = () => {
   const [storeDropDown, setStoreDropDown] = useState(false);
   const [categories, setCategories] = useState([]);
+  const loggedIn = isUserLoggedIn();
 
   useEffect(() => {
     getCategories()
@@ -57,17 +58,17 @@ const Sidebar = () => {
               {category?.title}
             </a>
           ))}
-      {isUserLoggedIn ? (
+      {loggedIn ? (
         <a href="/library" className={linkStyles}>
         Game library
         </a>
       ) : null}
       </nav>
         <div>
-        {isUserLoggedIn ? (
-          <a href="/logout" className="absolute bottom-0 left-0 w-full border-t border-gray-700 h-14 flex items-center justify-center text-2xl text-gray-200 hover:text-gray-400">
+        {loggedIn ? (
+          <button onClick={() => logout()} className="absolute bottom-0 left-0 w-full border-t border-gray-700 h-14 flex items-center justify-center text-2xl text-gray-200 hover:text-gray-400">
             Logout
-            </a>
+            </button>
             ) : (
               <a href="/login" className="absolute bottom-0 left-0 w-full border-t border-gray-700 h-14 flex items-center justify-center text-2xl text-gray-200 hover:text-gray-400">
                 Login

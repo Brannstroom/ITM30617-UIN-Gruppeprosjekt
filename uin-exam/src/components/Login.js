@@ -22,6 +22,7 @@ export default function Login() {
             if (data.length === 1) {
                 setLogin(true);
                 localStorage.setItem("user", JSON.stringify(data));
+                window.location.reload();
             }
         }).catch(console.error);
     }    
