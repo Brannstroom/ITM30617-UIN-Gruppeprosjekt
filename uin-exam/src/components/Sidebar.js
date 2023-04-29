@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import sanityClient from "../client.js";
+import { getCategories } from "../api/category";
 
 import logo from "../images/macslogo_white.png";
 import { ChevronDown } from "../icons/ChevronDown";
@@ -10,16 +10,11 @@ const Sidebar = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    sanityClient
-      .fetch(
-        `*[_type == "category"]{
-      title,
-      slug,
-      }`
-      )
+    getCategories()
       .then((data) => {
         setCategories(data);
-      });
+      })
+      .catch(console.error);
   }, []);
 
   const linkStyles = "mt-5 ml-4 hover:text-gray-400";
@@ -63,7 +58,7 @@ const Sidebar = () => {
           ))}
 
         <a href="/library" className={linkStyles}>
-          Library
+          Game library
         </a>
       </nav>
         <div>
