@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { isUserLoggedIn } from "../utils/login";
 
-export const PurchaseConfirmation = ({ game, onClose }) => {
+export const PurchaseConfirmation = ({ title, onClose }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   const handleOnClose = () => {
@@ -18,7 +18,7 @@ export const PurchaseConfirmation = ({ game, onClose }) => {
               Thank you for your purchase!
             </div>
             <div>
-              You successfully purchased {game.title} and it has been added to
+              You successfully purchased {title} and it has been added to
               your library.
             </div>
             <div className="mt-4 flex justify-end items-center">

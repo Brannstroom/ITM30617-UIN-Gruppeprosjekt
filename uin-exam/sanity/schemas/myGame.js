@@ -28,4 +28,12 @@ export default defineType({
             to: [{type: 'user'}],
         }),
     ],
+    validation: (Rule) =>
+    Rule.unique(
+      ({ user, game }) => ({
+        user: user._ref,
+        game: game._ref,
+      }),
+      { ignoreDuplicates: true }
+    ),
 })

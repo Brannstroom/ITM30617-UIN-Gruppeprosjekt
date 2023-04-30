@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { getUserGames } from "../api/game";
+import { isUserLoggedIn } from "../utils/login";
 
 export default function Library() {
     const [games, setGames] = useState([]);
     const user = JSON.parse(localStorage.getItem("user"));
 
     useEffect(() => {
+        if (!isUserLoggedIn()) {
+            window.location.href = "/login";
+            return;
+        }
         getUserGames(user)
             .then((data) => {
                 setGames(data);
@@ -15,6 +20,7 @@ export default function Library() {
     
     
     return (
+
         <div>
         {games.map((game) => (
             <div key={game.ref} className="shadow-lg hover:shadow-2xl rounded-xl flex flex-col">

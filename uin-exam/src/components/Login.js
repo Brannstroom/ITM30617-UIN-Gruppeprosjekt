@@ -62,13 +62,13 @@ export default function Login() {
             .then((data) => {
               setErrorMessage("");
               setShowSignup(false);
+              clearInputInfo();
             })
             .catch(console.error);
         } else {
           setErrorMessage("Username or email already taken");
         }
-      }
-      )
+      })
       .catch(console.error);
   };
 

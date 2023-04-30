@@ -16,7 +16,6 @@ const RoutesComp = () => {
             <Route path="/games/:category" element={<Games />} />
             <Route path="/game/:slug" element={<Game />} />
             <Route path="/library" element={<Library />} />
-
             <Route path="/login" element={<Login />} />
         </Routes>
     </div>
