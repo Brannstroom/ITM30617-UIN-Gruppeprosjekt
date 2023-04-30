@@ -40,7 +40,7 @@ export default function Games() {
             </a>
           ))}
         </div>
-
+          <StoreGamesList games={games} />
           
       </div>
   );
