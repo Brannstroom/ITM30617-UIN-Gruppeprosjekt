@@ -11,12 +11,15 @@ export default function Library() {
             window.location.href = "/login";
             return;
         }
+        if(games.length !== 0) {
+            return;
+        }
         getUserGames(user)
             .then((data) => {
                 setGames(data);
             })
             .catch(console.error);
-    }, [user]);
+    }, [games.length, user]);
     
     
     return (

@@ -41,7 +41,7 @@ export default function Games() {
           ))}
         </div>
 
-          <StoreGamesList games={games} />
+          
       </div>
   );
 }

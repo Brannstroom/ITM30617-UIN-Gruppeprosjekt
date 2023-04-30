@@ -7,7 +7,6 @@ export const getGames = async (category) => {
 
   const queryTail = `{
         "ref": _id,
-        id,
         title,
         slug,
         image,
@@ -34,7 +33,6 @@ export const getGames = async (category) => {
 export const getGame = async (slug) => {
   const query = `*[_type == "game" && slug.current == "${slug}"]{
       "ref": _id,
-      id,
       title,
       slug,
       image,
@@ -60,7 +58,6 @@ export const getGame = async (slug) => {
 export const getUserGames = async (user) => {
   const query = `*[_type == "myGame" && user._ref == "${user[0].ref}"]{
     "ref": _id,
-    id,
     game->{
       title,
       slug,
@@ -91,4 +88,17 @@ export const getUserGames = async (user) => {
   return data;
 };
 
+export const getOwnedGames = async (user) => {
+    const query = `*[_type == "myGame" && user._ref == "${user[0].ref}"]{
+      "ref": _id,
+      game->{
+        _id,
+        title,
+        slug,
+      }
+    }`;
+    const data = await sanityClient.fetch(query);
+    return data;
+
+};
 
