@@ -11,11 +11,11 @@ export default function Home() {
     enableTooltip: true,
     deterministic: false,
     fontFamily: "impact",
-    fontSizes: [5, 60],
+    fontSizes: [10, 25, 40],
     fontStyle: "normal",
     fontWeight: "normal",
     padding: 1,
-    rotations: 3,
+    rotations: 2,
     rotationAngles: [0, 90],
     scale: "sqrt",
     spiral: "archimedean",
@@ -23,7 +23,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (wordCloudData.length == 0) {
+    if (wordCloudData.length === 0) {
       getGames(null).then((data) => setGames(data));
       const categories = new Map();
       games.forEach((game) => {
@@ -46,10 +46,8 @@ export default function Home() {
   }, [games, wordCloudData.length]);
 
   return (
-    <div className="text-xl">
-      <h1>Home</h1>
-      {wordCloudData.length > 0 && <h2>Word Cloud</h2>}
+    <>
       <ReactWordcloud words={wordCloudData} options={options}/>
-    </div>
+      </>
   );
 }
