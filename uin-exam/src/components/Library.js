@@ -11,20 +11,21 @@ export default function Library() {
             window.location.href = "/login";
             return;
         }
-        if(games.length !== 0) {
-            return;
-        }
         getUserGames(user)
             .then((data) => {
                 setGames(data);
             })
             .catch(console.error);
-    }, [games.length, user]);
+    }, []);
     
     
     return (
 
         <div>
+            <p>You have</p>
+            <h1>{games.length}</h1>
+            <p>games in your library</p>
+
         {games.map((game) => (
             <div key={game.ref} className="shadow-lg hover:shadow-2xl rounded-xl flex flex-col">
                 <img src={game.game.image} alt={game.game.title} className="rounded-t-xl" />
