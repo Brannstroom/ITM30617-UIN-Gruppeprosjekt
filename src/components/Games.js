@@ -8,9 +8,13 @@ export default function Games() {
 
   useEffect (() => {
 
-    getStoreGames().then((games) => {
-      setGames(games);
-    });
+    getStoreGames()
+      .then((games) => {
+        setGames(games);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
 
   }, []);

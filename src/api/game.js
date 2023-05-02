@@ -5,26 +5,41 @@ const BASE_URL = "https://api.rawg.io/api/games"
 
 export const getGames = async () => {
     const query = `*[_type == "game"] {
-      "ref": _id
+      "ref": _id,
       title,
       slug,
       apiId
     }`;
+
     const data = await sanityClient.fetch(query);
     return data;
-
 }
 
 export const getStoreGames = async () => {
-  console.log("getStoreGames 1")
-  const gameIds = await getGames()
-  console.log("getStoreGames 2")
+  const games = await getGames();
+  const gameIds = games.map((game) => game.apiId);
 
   const gameIdsString = gameIds.join(",");
   const url = `${BASE_URL}?key=${API_KEY}&ids=${gameIdsString}`
-  console.log(url);
+
   const response = await fetch(url);
-  const jsonData = await response.json();
-  console.log(jsonData);
-  return jsonData.results;
+  const data = await response.json();
+  console.log(data);
+  return data.results;
+}
+
+export const getOwnedGames = async (user) => {
+  const query = `*[_type == "myGame" && user._ref == "${user[0].ref}"]{
+    "ref": _id,
+    game->{
+      title,
+      slug,
+      apiId
+    },
+    isFavorite,
+    hoursPlayed
+  }`;
+
+  const data = await sanityClient.fetch(query);
+  return data;
 }
