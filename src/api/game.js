@@ -1,104 +1,30 @@
 import sanityClient from "../client.js";
 
-export const getGames = async (category) => {
-  const queryHead = category
-    ? `*[_type == "game"]["${category}" in categories[]->slug.current]`
-    : `*[_type == "game"]`;
+const API_KEY = "ccc74baf87a34789932afedbe4618fd8"
+const BASE_URL = "https://api.rawg.io/api/games"
 
-  const queryTail = `{
-        "ref": _id,
-        title,
-        slug,
-        image,
-        categories[]->{
-          title,
-          slug,
-        },
-        releaseDate,
-        rating,
-        summary,
-        description,
-        developers,
-        publisher,
-        platforms,
-        stores,
-        price,
-      }`;
-
-  const query = `${queryHead}${queryTail}`;
-  const data = await sanityClient.fetch(query);
-  return data;
-};
-
-export const getGame = async (slug) => {
-  const query = `*[_type == "game" && slug.current == "${slug}"]{
-      "ref": _id,
+export const getGames = async () => {
+    const query = `*[_type == "game"] {
+      "ref": _id
       title,
       slug,
-      image,
-      categories[]->{
-        title,
-        slug,
-      },
-      releaseDate,
-      rating,
-      summary,
-      description,
-      developers,
-      publisher,
-      platforms,
-      stores,
-      price,
-    }`;
-
-  const data = await sanityClient.fetch(query);
-  return data[0];
-};
-
-export const getUserGames = async (user) => {
-  const query = `*[_type == "myGame" && user._ref == "${user[0].ref}"]{
-    "ref": _id,
-    game->{
-      title,
-      slug,
-      image,
-      categories[]->{
-        title,
-        slug,
-      },
-      releaseDate,
-      rating,
-      summary,
-      description,
-      developers,
-      publisher,
-      platforms,
-      stores,
-      price,
-    },
-    user->{
-      name,
-      email,
-      ref,
-    },
-    isFavorite,
-    hoursPlayed,
-  }`;
-  const data = await sanityClient.fetch(query);
-  return data;
-};
-
-export const getOwnedGames = async (user) => {
-    const query = `*[_type == "myGame" && user._ref == "${user[0].ref}"]{
-      "ref": _id,
-      game->{
-        _id,
-        title,
-        slug,
-      }
+      apiId
     }`;
     const data = await sanityClient.fetch(query);
     return data;
 
-};
+}
 
+export const getStoreGames = async () => {
+  console.log("getStoreGames 1")
+  const gameIds = await getGames()
+  console.log("getStoreGames 2")
+
+  const gameIdsString = gameIds.join(",");
+  const url = `${BASE_URL}?key=${API_KEY}&ids=${gameIdsString}`
+  console.log(url);
+  const response = await fetch(url);
+  const jsonData = await response.json();
+  console.log(jsonData);
+  return jsonData.results;
+}

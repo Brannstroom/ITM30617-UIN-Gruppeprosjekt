@@ -11,11 +11,6 @@ export default function Library() {
             window.location.href = "/login";
             return;
         }
-        getUserGames(user)
-            .then((data) => {
-                setGames(data);
-            })
-            .catch(console.error);
     }, []);
     
     

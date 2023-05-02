@@ -7,17 +7,6 @@ export default function Game() {
   const [game, setGame] = useState({});
   const { slug } = useParams();
 
-  useEffect(() => {
-    console.log("Slug", slug);
-    getGame(slug)
-      .then((data) => {
-        setGame(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [slug]);
-
   return (
 		<div className="text-xl text-center">
       <div className="font-semibold text-3xl mb-3">{game.title}</div>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { getCategories } from "../../api/category";
 
 import logo from "../../images/macslogo_white.png";
 import { ChevronDown } from "../../icons/ChevronDown";
@@ -11,13 +10,6 @@ const Sidebar = () => {
   const [storeDropDown, setStoreDropDown] = useState(false);
   const [categories, setCategories] = useState([]);
 
-  useEffect(() => {
-    getCategories()
-      .then((data) => {
-        setCategories(data);
-      })
-      .catch(console.error);
-  }, []);
 
   const linkStyles = "mt-5 ml-4 hover:text-gray-400";
   const LinkStyleSub = "ml-8 hover:text-gray-400 mt-2";
