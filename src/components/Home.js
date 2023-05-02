@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ReactWordcloud from "react-wordcloud";
+import { TagCloud } from 'react-tagcloud'
 import { getGames } from "../api/game";
 
 export default function Home() {
@@ -38,16 +38,15 @@ export default function Home() {
 
       const data = [];
       categories.forEach((value, key) => {
-        data.push({ text: key, value: value });
+        data.push({ value: key, count: value });
       });
 
       setWordCloudData(data);
     }
   }, [games, wordCloudData.length]);
-
   return (
     <>
-      <ReactWordcloud words={wordCloudData} options={options}/>
+      <TagCloud tags={wordCloudData} options={options} minSize={10} maxSize={40}/>
       </>
   );
 }
