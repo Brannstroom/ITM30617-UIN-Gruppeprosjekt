@@ -12,13 +12,10 @@ export default function Game() {
     getGame(slug)
       .then((game) => {
         setGame(game);
+        setTags(game.tags.map((tag) => {
+          return {value: tag?.name, count: tag?.games_count}
+        }));
       })
-        .then(() => {
-          const tags = game.tags.map((tag) => {
-            return {value: tag?.name, count: tag?.games_count}
-          });
-          setTags(tags);
-        })
         .catch((error) => {
         console.log(error);
         });
