@@ -48,3 +48,19 @@ export const getOwnedGames = async (user) => {
   const data = await sanityClient.fetch(query);
   return data;
 }
+
+export const getGame = async (slug) => {
+  const query = `*[_type == "game" && slug.current == "${slug}"]{
+    "ref": _id,
+    title,
+    slug,
+    apiId,
+  }`;
+  const data = await sanityClient.fetch(query);
+
+  const url = `${BASE_URL}/${data[0].apiId}?key=${API_KEY}`;
+  const response = await fetch(url);
+  const gameData = await response.json();
+
+  return gameData;
+}
