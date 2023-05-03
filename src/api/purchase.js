@@ -7,11 +7,11 @@ export const handleCreate = async (game, user, isFavorite=true, hoursPlayed=0) =
         id: Math.round(Math.random(1) * 1000000), 
         game: {
           _type: "reference",
-          _ref: game.ref,
+          id: game.id,
         },
         user: {
           _type: "reference",
-          _ref: user[0].ref,
+          _ref: user.ref,
         },
         isFavorite: false,
         hoursPlayed: 0,
