@@ -24,7 +24,12 @@ export const getStoreGames = async () => {
 
   const response = await fetch(url);
   const data = await response.json();
-  console.log(data);
+
+  for(let i = 0; i < data.results.length; i++) {
+    console.log(games);
+    data.results[i].ref = games[i].ref;
+  }
+
   return data.results;
 }
 

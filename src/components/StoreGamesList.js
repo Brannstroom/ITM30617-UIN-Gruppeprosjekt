@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 import { PurchaseConfirmation } from "./PurchaseConfirmation";
 import { getOwnedGames } from "../api/game";
-import { handleCreate } from "../api/purchase";
+import { purchaseGame } from "../api/purchase";
 import { isUserLoggedIn } from "../utils/login";
 
 export default function StoreGamesList({ games }) {
@@ -18,7 +18,7 @@ export default function StoreGamesList({ games }) {
         })
         .catch(console.error);
     }
-  }, []);
+  }, [selectedGame]);
 
   const handleClosePurchaseConfirmation = () => {
     setShowConfirmation(false);
@@ -28,7 +28,7 @@ export default function StoreGamesList({ games }) {
     if(!isOwned(game)) {
       setSelectedGame(game);
       setShowConfirmation(true);
-      handleCreate(game, JSON.parse(localStorage.getItem("user")));
+      purchaseGame(game, JSON.parse(localStorage.getItem("user")));
     }
   }
 
