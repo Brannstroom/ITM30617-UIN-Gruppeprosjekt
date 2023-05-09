@@ -12,9 +12,11 @@ export default function StoreGamesList({ games }) {
 
   useEffect(() => {
     if (isUserLoggedIn()) {
-      getOwnedGames(JSON.parse(localStorage.getItem("user")))
+      const user = JSON.parse(localStorage.getItem("user"))[0];
+      getOwnedGames(user)
         .then((data) => {
           setAlreadyOwned(data);
+          console.log(data)
         })
         .catch(console.error);
     }
@@ -23,7 +25,6 @@ export default function StoreGamesList({ games }) {
   const handleClosePurchaseConfirmation = () => {
     setShowConfirmation(false);
   };
-
   const handlePurchase = (game) => {
     if(!isOwned(game)) {
       setSelectedGame(game);
@@ -64,7 +65,6 @@ export default function StoreGamesList({ games }) {
             </div>
             <div>{game.released}</div>
             <div className="text-gray-500 mt-4">{game.description_raw}</div>
-
             <div className="py-2 px-4 flex justify-end text-gray-100">
               <span className="bg-gray-800 rounded-l-md p-1 break-keep">
                 {(game.id / 10).toFixed(2)} NOK
@@ -72,10 +72,11 @@ export default function StoreGamesList({ games }) {
               <button
                 className="bg-sky-900 rounded-r-md p-1"
                 onClick={() => {handlePurchase(game)}}
-                disabled={alreadyOwned.includes(game.id)}
+                disabled={true}
               >
                 {"Purchase"}
               </button>
+              <img className="ml-2 object-cover h-8 w-8" src={require("../icons/heart_unfilled.png")}/>
             </div>
 
             {showConfirmation && (

@@ -34,9 +34,10 @@ export const getStoreGames = async () => {
 }
 
 export const getOwnedGames = async (user) => {
-  const query = `*[_type == "myGame" && user._ref == "${user._ref}"]{
+  const query = `*[_type == "myGame" && user._ref == "${user.ref}"]{
     "ref": _id,
     game->{
+      "ref": _id,
       title,
       slug,
       apiId
