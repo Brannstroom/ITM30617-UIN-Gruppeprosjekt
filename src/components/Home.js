@@ -6,7 +6,6 @@ export default function Home() {
   const [games, setGames] = useState([]);
 
   useEffect (() => {
-
     getStoreGames()
       .then((games) => {
         setGames(games.slice(0, 3));
@@ -34,8 +33,8 @@ export default function Home() {
 
 
 
-				<div className="basis-1/2 mt-10">
-					<div className="font-semibold text-lg w-4/6">Game Library
+				<div className="basis-1/3 mt-10">
+					<div className="font-semibold text-lg">Game Library
           <a href="/library" className="bg-black text-white rounded ml-3 p-1"> Visit Library</a>
           </div>
             {/* Get 4 games from library */}
@@ -44,7 +43,7 @@ export default function Home() {
 
 
 
-				<div className="basis-1/2 mt-10">
+				<div className="basis-2/3 mt-10">
 					<div className="font-semibold text-lg">Favorites
           <a href="/favorites" className="bg-black text-white rounded ml-3 p-1"> Visit Favorites</a>
           </div>

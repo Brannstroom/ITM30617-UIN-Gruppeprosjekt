@@ -51,11 +51,19 @@ const Sidebar = () => {
             </a>
           ))}
       {isUserLoggedIn ? (
+        <>
         <a href="/library" className={linkStyles}>
         Game library
         </a>
-      ) : null}
+        <a href="/favorites" className={linkStyles}>
+        Favorites
+        </a>
+        </>
+      ) :  null}
+
+
       </nav>
+
 
       <LoginCard />
     </div>
