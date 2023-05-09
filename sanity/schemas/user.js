@@ -21,5 +21,11 @@ export default defineType({
             title: 'Password',
             type: 'string',
         }),
+        defineField({
+            name: 'favorites',
+            title: 'Favorites',
+            type: 'array',
+            of: [{type: 'number'}],
+        }),
     ],
 })
