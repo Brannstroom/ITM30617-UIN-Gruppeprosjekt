@@ -7,10 +7,14 @@ export const Star = ({color, api}) => {
     const isFavorite = () => {
         if(!localStorage.getItem("favorites")) {
             fetchFavorites(user).then((data) => {
+                if(data[0].favorites === null || data[0].favorites === undefined) {
+                    return false;
+                }
                 localStorage.setItem("favorites", JSON.stringify(data[0].favorites));
                 return JSON.parse(localStorage.getItem("favorites")).includes(api);
             });
-        } else {
+        }
+        else {
             return JSON.parse(localStorage.getItem("favorites")).includes(api);
         }
     }

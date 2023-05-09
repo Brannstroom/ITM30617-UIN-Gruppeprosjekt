@@ -67,13 +67,13 @@ export const getGame = async (slug) => {
 
 export const favoriteGame = (apiId, user) => {
       fetchFavorites(user).then((data) => {
-          if(data.length === 0) {
-            sanityClient.patch(user.ref).set({favorites: [apiId]}).commit().then((data) => {
-                localStorage.setItem("favorites", JSON.stringify(data.favorites));
+          if(data.length === 0 || data[0]?.favorites === undefined || data[0]?.favorites === null) {
+            sanityClient.patch(user.ref).set({favorites: [apiId]}).commit().then(() => {
+                localStorage.setItem("favorites", JSON.stringify([apiId]));
                 window.location.reload();
             });
           }
-          else if(data[0].favorites.includes(apiId)) {
+          else if(data[0]?.favorites?.includes(apiId)) {
             return;
           } else {
               sanityClient.patch(user.ref).append("favorites", [apiId]).commit().then((data) => {
