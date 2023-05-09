@@ -16,7 +16,6 @@ export const Star = ({color, api}) => {
     }
     let clicked = false;
     const handleClick = () => {
-        console.log(api)
         if(isFavorite() && !clicked) {
             unfavoriteGame(api, user);
         } else {
