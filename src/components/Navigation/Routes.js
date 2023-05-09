@@ -5,7 +5,9 @@ import Home from '../Home'
 import Games from '../Games'
 import Game from '../Game'
 import Library from '../Library'
+import Favorites from '../Favorites'
 import Login from '../Login'
+
 
 const RoutesComp = () => {
   return (
@@ -16,6 +18,7 @@ const RoutesComp = () => {
             <Route path="/games/:category" element={<Games />} />
             <Route path="/game/:slug" element={<Game />} />
             <Route path="/library" element={<Library />} />
+            <Route path="/favorites" element={<Favorites />} />
             <Route path="/login" element={<Login />} />
         </Routes>
     </div>

@@ -18,7 +18,7 @@ export default function Home() {
   }, []);
   return (
 		<>
-			<div className="flex flex-wrap w-4/5">
+			<div className="flex flex-wrap w-4/5 m-auto">
 				<div className="basis-full">
 					<div className="font-semibold text-lg">Store 
             <a href="/games" className="bg-black text-white rounded ml-3 p-1"> Visit Store</a>
