@@ -32,7 +32,9 @@ export default function Games() {
       </a>
 
     </div>
-    <StoreGamesList games={games} />
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-4">
+      <StoreGamesList games={games} />
+    </div>
   </div>
   );
 }

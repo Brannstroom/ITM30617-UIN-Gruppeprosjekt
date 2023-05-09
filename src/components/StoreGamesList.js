@@ -38,7 +38,7 @@ export default function StoreGamesList({ games }) {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-4">
+    <>
       {games.map((game) => (
         <div
           key={game.id}
@@ -50,7 +50,7 @@ export default function StoreGamesList({ games }) {
             <img
               src={game.background_image}
               alt={game.name}
-              className="rounded-t-xl"
+              className="rounded-t-xl w-full h-auto"
             />
             <div className="font-semibold text-lg ml-2">{game.name}</div>
           </a>
@@ -88,6 +88,6 @@ export default function StoreGamesList({ games }) {
           </div>
         </div>
       ))}
-    </div>
+    </>
   );
 }
