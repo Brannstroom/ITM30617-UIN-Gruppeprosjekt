@@ -15,7 +15,6 @@ export default function Game() {
         setTags(game.tags.map((tag) => {
           return {value: tag?.name, count: tag?.games_count}
         }));
-        console.log(game)
       })
         .catch((error) => {
         console.log(error);

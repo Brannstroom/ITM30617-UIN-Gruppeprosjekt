@@ -1,13 +1,17 @@
 import React, {useState, useEffect} from "react";
 import StoreGamesList from "./StoreGamesList";
 import { getStoreGames } from "../api/game";
+import {isUserLoggedIn} from "../utils/login";
 
 export default function Games() {
 
   const [games, setGames] = useState([]);
 
   useEffect (() => {
-
+    if (!isUserLoggedIn()) {
+      window.location.href = "/login";
+      return;
+    }
     getStoreGames()
       .then((games) => {
         setGames(games);
