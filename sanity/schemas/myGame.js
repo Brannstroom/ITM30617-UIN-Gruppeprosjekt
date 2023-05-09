@@ -12,11 +12,6 @@ export default defineType({
             to: [{type: 'game'}],
         }),
         defineField({
-            name: 'isFavorite',
-            title: 'Is favorite?',
-            type: 'boolean',
-        }),
-        defineField({
             name: 'hoursPlayed',
             title: 'Hours played',
             type: 'number',
