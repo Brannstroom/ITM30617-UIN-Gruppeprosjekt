@@ -26,7 +26,6 @@ export const getStoreGames = async () => {
   const data = await response.json();
 
   for(let i = 0; i < data.results.length; i++) {
-    console.log(games);
     data.results[i].ref = games[i].ref;
   }
 
@@ -64,4 +63,35 @@ export const getGame = async (slug) => {
   const gameData = await response.json();
 
   return gameData;
+}
+
+export const favoriteGame = (apiId, user) => {
+      fetchFavorites(user).then((data) => {
+          if(data.length === 0) {
+            sanityClient.patch(user.ref).set({favorites: [apiId]}).commit().then((data) => {
+                localStorage.setItem("favorites", JSON.stringify(data.favorites));
+                window.location.reload();
+            });
+          }
+          else if(data[0].favorites.includes(apiId)) {
+            return;
+          } else {
+              sanityClient.patch(user.ref).append("favorites", [apiId]).commit().then((data) => {
+                    localStorage.setItem("favorites", JSON.stringify(data.favorites));
+                    window.location.reload();
+              });
+          }
+      });
+}
+export const unfavoriteGame = (apiId, user) => {
+        const favorites = JSON.parse(localStorage.getItem("favorites")).filter((favorite) => favorite !== apiId);
+        sanityClient.patch(user.ref).set({favorites}).commit().then((data) => {
+            localStorage.setItem("favorites", JSON.stringify(data.favorites));
+            window.location.reload();
+        })
+}
+export const fetchFavorites = (user) => {
+    return sanityClient.fetch(`*[_type == "user" && _id == "${user.ref}"]{
+        favorites[]
+      }`)
 }
