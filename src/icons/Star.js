@@ -26,7 +26,11 @@ export const Star = ({color, api, favoritesIds}) => {
             clicked = true;
         } else {
             favoriteGame(api, user);
-            setFavorites([...favorites, api]);
+            if(!favorites || favorites.length === 0) {
+                setFavorites([api]);
+            } else {
+                setFavorites([...favorites, api]);
+            }
         }
     }
 
