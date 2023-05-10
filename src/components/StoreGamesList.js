@@ -30,15 +30,13 @@ export default function StoreGamesList({ games }) {
     setShowConfirmation(false);
   };
   const handlePurchase = (game) => {
-    if(!isOwned(game)) {
-      setSelectedGame(game);
-      setShowConfirmation(true);
-      purchaseGame(game, JSON.parse(localStorage.getItem("user")));
-    }
+    setSelectedGame(game);
+    setShowConfirmation(true);
+    purchaseGame(game, JSON.parse(localStorage.getItem("user")));
   }
 
   const isOwned = (game) => {
-    return alreadyOwned.some((g) => g.id === game.id);
+    return alreadyOwned.some((ownedGame) => ownedGame.game.apiId === game.id);
   }
 
   return (
@@ -54,7 +52,7 @@ export default function StoreGamesList({ games }) {
             <img
               src={game.background_image}
               alt={game.name}
-              className="rounded-t-xl w-full h-auto"
+              className="rounded-t-xl w-full h-64 object-cover"
             />
             <div className="font-semibold text-lg ml-2">{game.name}</div>
           </a>
@@ -75,11 +73,11 @@ export default function StoreGamesList({ games }) {
                 {(game.id / 10).toFixed(2)} NOK
               </span>
               <button
-                className="bg-sky-900 rounded-r-md p-1"
+                className={isOwned(game) ? "bg-gray-400 rounded-r-md p-1" : "bg-sky-500 rounded-r-md p-1"}
                 onClick={() => {handlePurchase(game)}}
-                disabled={true}
+                disabled={isOwned(game)}
               >
-                {"Purchase"}
+                {isOwned(game) ? "Owned" : "Purchase"}
               </button>
             </div>
 

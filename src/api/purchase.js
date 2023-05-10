@@ -10,7 +10,6 @@ export const purchaseGame = async (game, user) => {
     _type: "myGame",
     game: { _type: "reference", _ref: game.ref },
     user: { _type: "reference", _ref: user[0].ref },
-    isFavorite: false,
     hoursPlayed: 0,
   };
 

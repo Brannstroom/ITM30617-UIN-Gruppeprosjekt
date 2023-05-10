@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { getUserGames } from "../api/game";
+import { getOwnedGames } from "../api/game";
 import { isUserLoggedIn } from "../utils/login";
 
 export default function Library() {
     const [games, setGames] = useState([]);
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("user"))[0];
 
     useEffect(() => {
         if (!isUserLoggedIn()) {
             window.location.href = "/login";
             return;
         }
+        getOwnedGames(user).then((data) => {
+            setGames(data);
+            console.log(data)
+        });
     }, []);
     
     
