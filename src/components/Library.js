@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getOwnedGames } from "../api/game";
+import { getStoreGames } from "../api/game";
 import { isUserLoggedIn } from "../utils/login";
 
 export default function Library() {
@@ -11,10 +11,10 @@ export default function Library() {
             window.location.href = "/login";
             return;
         }
-        getOwnedGames(user).then((data) => {
-            setGames(data);
-            console.log(data)
+        getStoreGames(true).then((games) => {
+            setGames(games);
         });
+
     }, []);
     
     
@@ -24,15 +24,24 @@ export default function Library() {
             <p>You have</p>
             <h1>{games.length}</h1>
             <p>games in your library</p>
-
-        {games.map((game) => (
-            <div key={game.ref} className="shadow-lg hover:shadow-2xl rounded-xl flex flex-col">
-                <img src={game.game.image} alt={game.game.title} className="rounded-t-xl" />
-                <h2>{game.game.title}</h2>
-                <p>Hours played: {game.hoursPlayed}</p>
-                <p>Favorited? {game.isFavorite}</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-4">
+                {games.map((game) => (
+                    <div key={game.id} className="bg-white rounded-lg shadow-md">
+                        <a href={`/game/${game.slug}`} className="block">
+                            <img
+                                src={game.background_image}
+                                alt={game.name}
+                                className="w-full h-64 object-cover"
+                            />
+                        </a>
+                        <div className="p-4">
+                            <a href={`/game/${game.slug}`} className="block text-black-500 hover:text-gray:600 font-semibold text-lg mb-2">
+                                {game.name}
+                            </a>
+                        </div>
+        </div>
+                ))}
             </div>
-        ))}
         </div>
     );
 }

@@ -15,9 +15,15 @@ export const getGames = async () => {
     return data;
 }
 
-export const getStoreGames = async () => {
-  const games = await getGames();
-  const gameIds = games.map((game) => game.apiId);
+export const getStoreGames = async (userGames=false) => {
+    let games = [];
+    if(userGames) {
+        const user = JSON.parse(localStorage.getItem("user"))[0];
+        games = await getOwnedGames(user)
+    } else {
+        games = await getGames()
+    }
+  const gameIds = userGames ? games.map((game) => game.game.apiId) : games.map((game) => game.apiId);
 
   const gameIdsString = gameIds.join(",");
   const url = `${BASE_URL}?key=${API_KEY}&ids=${gameIdsString}`
@@ -25,7 +31,7 @@ export const getStoreGames = async () => {
   const response = await fetch(url);
   const data = await response.json();
     data.results = data.results.map((game) => {
-        const ref = games.find((g) => g.apiId === game.id).ref;
+        const ref = userGames ?  games.find((g) => g.game.apiId === game.id).ref : games.find((g) => g.apiId === game.id).ref;
         return { ...game, ref };
     });
   return data.results;
@@ -40,7 +46,6 @@ export const getOwnedGames = async (user) => {
       slug,
       apiId
     },
-    isFavorite,
     hoursPlayed
   }`;
 
@@ -70,14 +75,14 @@ export const favoriteGame = (apiId, user) => {
             sanityClient.patch(user.ref).set({favorites: [apiId]}).commit()
           }
           else if(data[0]?.favorites?.includes(apiId)) {
-            return;
+
           } else {
               sanityClient.patch(user.ref).append("favorites", [apiId]).commit()
           }
       });
 }
 export const unfavoriteGame = (user, apiId) => {
-    const favorites = fetchFavorites(user).then((data) => {
+    fetchFavorites(user).then((data) => {
         const filtered = data[0]?.favorites?.filter((id) => id !== apiId);
         sanityClient.patch(user.ref).set({favorites: filtered}).commit()
     });
