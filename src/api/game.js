@@ -24,11 +24,10 @@ export const getStoreGames = async () => {
 
   const response = await fetch(url);
   const data = await response.json();
-
-  for(let i = 0; i < data.results.length; i++) {
-    data.results[i].ref = games[i].ref;
-  }
-
+    data.results = data.results.map((game) => {
+        const ref = games.find((g) => g.apiId === game.id).ref;
+        return { ...game, ref };
+    });
   return data.results;
 }
 

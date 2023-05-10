@@ -13,11 +13,11 @@ export default function StoreGamesList({ games }) {
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"))[0];
     if (isUserLoggedIn()) {
-      fetchFavorites(JSON.parse(localStorage.getItem("user"))[0]).then((data) => {
+      fetchFavorites(user).then((data) => {
         setFavorites(data[0]?.favorites);
         });
-      const user = JSON.parse(localStorage.getItem("user"))[0];
       getOwnedGames(user)
         .then((data) => {
           setAlreadyOwned(data);
