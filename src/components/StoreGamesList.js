@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 import { PurchaseConfirmation } from "./PurchaseConfirmation";
-import { getOwnedGames } from "../api/game";
+import {fetchFavorites, getOwnedGames} from "../api/game";
 import { purchaseGame } from "../api/purchase";
 import { isUserLoggedIn } from "../utils/login";
 import { Star } from "../icons/Star";
@@ -10,9 +10,13 @@ export default function StoreGamesList({ games }) {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [selectedGame, setSelectedGame] = useState(null);
   const [alreadyOwned, setAlreadyOwned] = useState([]);
+  const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
     if (isUserLoggedIn()) {
+      fetchFavorites(JSON.parse(localStorage.getItem("user"))[0]).then((data) => {
+        setFavorites(data[0]?.favorites);
+        });
       const user = JSON.parse(localStorage.getItem("user"))[0];
       getOwnedGames(user)
         .then((data) => {
@@ -64,7 +68,7 @@ export default function StoreGamesList({ games }) {
               ))}
             </div>
             <div>{game.released}</div>
-            <Star color={"black"} api={game.id} />
+            <Star color={"black"} api={game.id} favoritesIds={favorites}/>
             <div className="text-gray-500 mt-4">{game.description_raw}</div>
             <div className="py-2 px-4 flex justify-end text-gray-100">
               <span className="bg-gray-800 rounded-l-md p-1 break-keep">

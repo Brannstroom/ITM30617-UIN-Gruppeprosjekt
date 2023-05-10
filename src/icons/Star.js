@@ -1,29 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {favoriteGame, fetchFavorites, unfavoriteGame} from "../api/game";
 
-export const Star = ({color, api}) => {
+export const Star = ({color, api, favoritesIds}) => {
 
+    const [favorites, setFavorites] = useState([]);
     const user = JSON.parse(localStorage.getItem("user"))[0];
+
+    useEffect(() => {
+        if(!favorites || favorites.length === 0) {
+            setFavorites(favoritesIds);
+        }
+    }, [favorites]);
     const isFavorite = () => {
-        if(!localStorage.getItem("favorites")) {
-            fetchFavorites(user).then((data) => {
-                if(data[0].favorites === null || data[0].favorites === undefined) {
-                    return false;
-                }
-                localStorage.setItem("favorites", JSON.stringify(data[0].favorites));
-                return JSON.parse(localStorage.getItem("favorites")).includes(api);
-            });
+        if(!favorites) {
+            return false;
         }
-        else {
-            return JSON.parse(localStorage.getItem("favorites")).includes(api);
+        return favorites.includes(api);
         }
-    }
+
     let clicked = false;
     const handleClick = () => {
         if(isFavorite() && !clicked) {
-            unfavoriteGame(api, user);
+            unfavoriteGame(user, api);
+            setFavorites(favorites.filter(favorite => favorite !== api));
+            clicked = true;
         } else {
             favoriteGame(api, user);
+            setFavorites([...favorites, api]);
         }
     }
 

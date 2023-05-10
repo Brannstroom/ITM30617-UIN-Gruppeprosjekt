@@ -68,27 +68,20 @@ export const getGame = async (slug) => {
 export const favoriteGame = (apiId, user) => {
       fetchFavorites(user).then((data) => {
           if(data.length === 0 || data[0]?.favorites === undefined || data[0]?.favorites === null) {
-            sanityClient.patch(user.ref).set({favorites: [apiId]}).commit().then(() => {
-                localStorage.setItem("favorites", JSON.stringify([apiId]));
-                window.location.reload();
-            });
+            sanityClient.patch(user.ref).set({favorites: [apiId]}).commit()
           }
           else if(data[0]?.favorites?.includes(apiId)) {
             return;
           } else {
-              sanityClient.patch(user.ref).append("favorites", [apiId]).commit().then((data) => {
-                    localStorage.setItem("favorites", JSON.stringify(data.favorites));
-                    window.location.reload();
-              });
+              sanityClient.patch(user.ref).append("favorites", [apiId]).commit()
           }
       });
 }
-export const unfavoriteGame = (apiId, user) => {
-        const favorites = JSON.parse(localStorage.getItem("favorites")).filter((favorite) => favorite !== apiId);
-        sanityClient.patch(user.ref).set({favorites}).commit().then((data) => {
-            localStorage.setItem("favorites", JSON.stringify(data.favorites));
-            window.location.reload();
-        })
+export const unfavoriteGame = (user, apiId) => {
+    const favorites = fetchFavorites(user).then((data) => {
+        const filtered = data[0]?.favorites?.filter((id) => id !== apiId);
+        sanityClient.patch(user.ref).set({favorites: filtered}).commit()
+    });
 }
 export const fetchFavorites = (user) => {
     return sanityClient.fetch(`*[_type == "user" && _id == "${user.ref}"]{
