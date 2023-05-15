@@ -100,3 +100,21 @@ export const fetchFavorites = () => {
 export const getOwnedGamesByUser = () => {
     return getStoreGames(true);
 }
+
+export const getFavoriteGames = () => {
+  return fetchFavorites().then((favoriteIds) => {
+    const gameIdsString = favoriteIds[0]?.favorites?.join(",");
+    const url = `${BASE_URL}?key=${API_KEY}&ids=${gameIdsString}`;
+    return fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        data.results = data.results.map((game) => {
+          const ref = favoriteIds[0]?.favorites?.includes(game.id)
+            ? favoriteIds[0].favorites.find((id) => id === game.id)
+            : null;
+          return { ...game, ref };
+        });
+        return data.results;
+      });
+  });
+};
