@@ -20,7 +20,7 @@ export const getStoreGames = async (userGames=false) => {
     let games = [];
     if(userGames) {
         const user = getUser();
-        games = await getOwnedGames(user);
+        games = await getOwnedGames();
     } else {
         games = await getGames();
     }
@@ -86,7 +86,7 @@ export const favoriteGame = (apiId) => {
 }
 export const unfavoriteGame = (apiId) => {
     const user = getUser();
-    fetchFavorites(user).then((data) => {
+    fetchFavorites().then((data) => {
         const filtered = data[0]?.favorites?.filter((id) => id !== apiId);
         sanityClient.patch(user.ref).set({favorites: filtered}).commit()
     });
@@ -96,4 +96,8 @@ export const fetchFavorites = () => {
     return sanityClient.fetch(`*[_type == "user" && _id == "${user.ref}"]{
         favorites[]
       }`)
+}
+
+export const getOwnedGamesByUser = () => {
+    return getStoreGames(true);
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getStoreGames } from "../api/game";
+import {getOwnedGamesByUser, getStoreGames} from "../api/game";
 import { isUserLoggedIn } from "../utils/login";
 
 export default function Library() {
@@ -10,7 +10,7 @@ export default function Library() {
             window.location.href = "/login";
             return;
         }
-        getStoreGames(true).then((games) => {
+        getOwnedGamesByUser().then((games) => {
             setGames(games);
         });
 
