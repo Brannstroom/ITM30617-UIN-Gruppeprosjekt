@@ -19,7 +19,6 @@ export const getGames = async () => {
 export const getStoreGames = async (userGames=false) => {
     let games = [];
     if(userGames) {
-        const user = getUser();
         games = await getOwnedGames();
     } else {
         games = await getGames();
