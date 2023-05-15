@@ -27,6 +27,11 @@ export default function Home() {
 			setOwnedGames(ownedGames);
 		});
 	}, []);
+
+	const isOwned = (game) => {
+		return ownedGames.some((ownedGame) => ownedGame.id === game.id);
+	}
+
 	return (
 		<>
 			<div className="flex flex-wrap w-4/5">
@@ -105,7 +110,7 @@ export default function Home() {
 											<div className="font-semibold text-lg mb-2">
 												{game.name}
 											</div>
-											<div>Hours Played: {game.playtime}</div>
+											<div>{isOwned(game) ? "Hours Played: " + game.playtime : null}</div>
 										</div>
 									</a>
 								</div>

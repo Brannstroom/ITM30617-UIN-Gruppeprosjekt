@@ -38,6 +38,9 @@ export default function Library() {
                             <a href={`/game/${game.slug}`} className="block text-black-500 hover:text-gray:600 font-semibold text-lg mb-2">
                                 {game.name}
                             </a>
+                            <div className="text-gray-600">
+                                Time played: {game.playtime}
+                            </div>
                         </div>
         </div>
                 ))}

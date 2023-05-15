@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { getFavoriteGames } from "../api/game";
+import {getFavoriteGames, getOwnedGamesByUser} from "../api/game";
 import { isUserLoggedIn } from "../utils/login";
 
 export default function Favorites() {
 	const [favorites, setFavorites] = useState([]);
-
+	const [ownedGames, setOwnedGames] = useState([]);
 	useEffect(() => {
 		if (!isUserLoggedIn()) {
 			window.location.href = "/login";
@@ -13,7 +13,14 @@ export default function Favorites() {
 		getFavoriteGames().then((favorites) => {
 			setFavorites(favorites);
 		});
+		getOwnedGamesByUser().then((ownedGames) => {
+			setOwnedGames(ownedGames);
+		});
 	}, []);
+
+	const isOwned = (game) => {
+		return ownedGames.some((ownedGame) => ownedGame.id === game.id);
+	}
 
 	return (
 		<>
@@ -36,7 +43,7 @@ export default function Favorites() {
 										<div className="font-semibold text-lg mb-2">
 											{game.name}
 										</div>
-										<div>Hours Played: {game.playtime}</div>
+										<div>{isOwned(game) ? "Hours Played: " + game.playtime : null}</div>
 									</div>
 								</a>
 							</div>
