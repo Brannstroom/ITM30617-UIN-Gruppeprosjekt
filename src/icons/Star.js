@@ -4,7 +4,6 @@ import {favoriteGame, fetchFavorites, unfavoriteGame} from "../api/game";
 export const Star = ({color, api, favoritesIds}) => {
 
     const [favorites, setFavorites] = useState([]);
-    const user = JSON.parse(localStorage.getItem("user"))[0];
 
     useEffect(() => {
         if(!favorites || favorites.length === 0) {
@@ -21,11 +20,11 @@ export const Star = ({color, api, favoritesIds}) => {
     let clicked = false;
     const handleClick = () => {
         if(isFavorite() && !clicked) {
-            unfavoriteGame(user, api);
+            unfavoriteGame(api);
             setFavorites(favorites.filter(favorite => favorite !== api));
             clicked = true;
         } else {
-            favoriteGame(api, user);
+            favoriteGame(api);
             if(!favorites || favorites.length === 0) {
                 setFavorites([api]);
             } else {

@@ -4,7 +4,6 @@ import { isUserLoggedIn } from "../utils/login";
 
 export default function Library() {
     const [games, setGames] = useState([]);
-    const user = JSON.parse(localStorage.getItem("user"))[0];
 
     useEffect(() => {
         if (!isUserLoggedIn()) {

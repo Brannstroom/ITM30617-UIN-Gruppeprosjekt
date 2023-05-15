@@ -13,12 +13,11 @@ export default function StoreGamesList({ games }) {
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"))[0];
     if (isUserLoggedIn()) {
-      fetchFavorites(user).then((data) => {
+      fetchFavorites().then((data) => {
         setFavorites(data[0]?.favorites);
         });
-      getOwnedGames(user)
+      getOwnedGames()
         .then((data) => {
           setAlreadyOwned(data);
         })
@@ -32,7 +31,7 @@ export default function StoreGamesList({ games }) {
   const handlePurchase = (game) => {
     setSelectedGame(game);
     setShowConfirmation(true);
-    purchaseGame(game, JSON.parse(localStorage.getItem("user")));
+    purchaseGame(game);
   }
 
   const isOwned = (game) => {

@@ -1,4 +1,5 @@
 import sanityClient from "../client.js";
+import { getUser } from "../utils/user.js";
 
 const API_KEY = "ccc74baf87a34789932afedbe4618fd8"
 const BASE_URL = "https://api.rawg.io/api/games"
@@ -18,10 +19,10 @@ export const getGames = async () => {
 export const getStoreGames = async (userGames=false) => {
     let games = [];
     if(userGames) {
-        const user = JSON.parse(localStorage.getItem("user"))[0];
-        games = await getOwnedGames(user)
+        const user = getUser();
+        games = await getOwnedGames(user);
     } else {
-        games = await getGames()
+        games = await getGames();
     }
   const gameIds = userGames ? games.map((game) => game.game.apiId) : games.map((game) => game.apiId);
 
@@ -37,8 +38,9 @@ export const getStoreGames = async (userGames=false) => {
   return data.results;
 }
 
-export const getOwnedGames = async (user) => {
-  const query = `*[_type == "myGame" && user._ref == "${user.ref}"]{
+export const getOwnedGames = async () => {
+    const user = getUser();
+    const query = `*[_type == "myGame" && user._ref == "${user.ref}"]{
     "ref": _id,
     game->{
       "ref": _id,
@@ -69,8 +71,9 @@ export const getGame = async (slug) => {
   return gameData;
 }
 
-export const favoriteGame = (apiId, user) => {
-      fetchFavorites(user).then((data) => {
+export const favoriteGame = (apiId) => {
+    const user = getUser();
+      fetchFavorites().then((data) => {
           if(data.length === 0 || data[0]?.favorites === undefined || data[0]?.favorites === null) {
             sanityClient.patch(user.ref).set({favorites: [apiId]}).commit()
           }
@@ -81,13 +84,15 @@ export const favoriteGame = (apiId, user) => {
           }
       });
 }
-export const unfavoriteGame = (user, apiId) => {
+export const unfavoriteGame = (apiId) => {
+    const user = getUser();
     fetchFavorites(user).then((data) => {
         const filtered = data[0]?.favorites?.filter((id) => id !== apiId);
         sanityClient.patch(user.ref).set({favorites: filtered}).commit()
     });
 }
-export const fetchFavorites = (user) => {
+export const fetchFavorites = () => {
+    const user = getUser();
     return sanityClient.fetch(`*[_type == "user" && _id == "${user.ref}"]{
         favorites[]
       }`)
