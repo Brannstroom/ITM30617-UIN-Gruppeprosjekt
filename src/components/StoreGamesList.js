@@ -57,13 +57,13 @@ export default function StoreGamesList({ games }) {
           </a>
 
           <div className="ml-2 flex-grow">
-            <div>
-              {game.genres.map((genre) => (
-                <span key={genre.name} className="mr-2">
-                  {genre.name}
-                </span>
-              ))}
-            </div>
+            <span className="mr-2">
+                {game.genres.map((genre) => (
+                    <span key={genre.id} className="bg-gray-200 rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2">
+                        {genre.name}
+                    </span>
+                ))}
+            </span>
             <div>{game.released}</div>
             <Star color={"black"} api={game.id} favoritesIds={favorites}/>
             <div className="text-gray-500 mt-4">{game.description_raw}</div>
