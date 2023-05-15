@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {favoriteGame, fetchFavorites, unfavoriteGame} from "../api/game";
+import {favoriteGame, unfavoriteGame} from "../api/game";
 
 export const Star = ({color, api, favoritesIds}) => {
 
@@ -9,7 +9,7 @@ export const Star = ({color, api, favoritesIds}) => {
         if(!favorites || favorites.length === 0) {
             setFavorites(favoritesIds);
         }
-    }, [favorites]);
+    }, [favorites, favoritesIds]);
     const isFavorite = () => {
         if(!favorites) {
             return false;

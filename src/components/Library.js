@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {getOwnedGamesByUser, getStoreGames} from "../api/game";
+import { getOwnedGamesByUser } from "../api/game";
 import { isUserLoggedIn } from "../utils/login";
 
 export default function Library() {
