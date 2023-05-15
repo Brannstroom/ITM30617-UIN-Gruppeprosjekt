@@ -24,7 +24,7 @@ export default function Library() {
                 <h1 className="text-3xl font-semibold tracking-wide mt-2">My Library</h1>
                 <h2 className="text-lg text-gray-600">You own {games.length} {games.length > 1 ? "games" : "game"}</h2>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mt-4">
                 {games.map((game) => (
                     <div key={game.id} className="bg-white rounded-lg shadow-md">
                         <a href={`/game/${game.slug}`} className="block">
