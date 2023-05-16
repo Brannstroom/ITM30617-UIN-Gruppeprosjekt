@@ -16,6 +16,20 @@ export const getGames = async () => {
     return data;
 }
 
+export const getCategoryGames = async (category) => {
+  const games = await getStoreGames();
+  if(!category) return games;
+  
+  const categoryGames = games.filter((game) => {
+    for(let i = 0; i < game.genres.length; i++) {
+      if(game.genres[i].name.toLowerCase() === category) return true;
+    }
+    return false;
+  });
+
+  return categoryGames;
+}
+
 export const getStoreGames = async (userGames=false) => {
     let games = [];
     if(userGames) {

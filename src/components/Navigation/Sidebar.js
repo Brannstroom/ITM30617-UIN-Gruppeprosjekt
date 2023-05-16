@@ -5,10 +5,17 @@ import { ChevronDown } from "../../icons/ChevronDown";
 import { ChevronRight } from "../../icons/ChevronRight";
 import { isUserLoggedIn } from "../../utils/login";
 import { LoginCard } from "../LoginCard";
+import { getCategories } from "../../api/category";
 
 const Sidebar = () => {
   const [storeDropDown, setStoreDropDown] = useState(false);
   const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    getCategories().then((categories) => {
+      setCategories(categories);
+    });
+  }, []);
 
 
   const linkStyles = "mt-5 ml-4 hover:text-gray-400";
@@ -43,11 +50,11 @@ const Sidebar = () => {
           categories &&
           categories.map((category) => (
             <a
-              href={`/games/${category?.slug?.current}`}
-              key={category.title}
+              href={`/games/${category.toLowerCase()}`}
+              key={category}
               className={LinkStyleSub}
             >
-              {category?.title}
+              {category}
             </a>
           ))}
       {isUserLoggedIn() ? (

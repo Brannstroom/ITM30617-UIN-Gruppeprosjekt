@@ -28,10 +28,13 @@ export default function StoreGamesList({ games }) {
   const handleClosePurchaseConfirmation = () => {
     setShowConfirmation(false);
   };
+
   const handlePurchase = (game) => {
     setSelectedGame(game);
     setShowConfirmation(true);
-    purchaseGame(game);
+    purchaseGame(game).then(() => {
+      getOwnedGames().then((data) => { setAlreadyOwned(data);});
+    });
   }
 
   const isOwned = (game) => {
