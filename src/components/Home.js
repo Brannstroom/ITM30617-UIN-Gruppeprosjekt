@@ -10,31 +10,36 @@ import {
 	getStoreGames,
 	getFavoriteGames,
 	getOwnedGamesByUser,
+	fetchFavorites
 } from "../api/game";
 
 export default function Home() {
 	const [games, setGames] = useState([]);
-	const [favorites, setFavorites] = useState([]);
+	const [favoriteGames, setFavoriteGames] = useState([]);
 	const [ownedGames, setOwnedGames] = useState([]);
 	const [showConfirmation, setShowConfirmation] = useState(false);
 	const [selectedGame, setSelectedGame] = useState(null);
+	const [favorites, setFavorites] = useState([]);
+	
 
 	useEffect(() => {
 		if (!isUserLoggedIn()) {
 			window.location.href = "/login";
 			return;
 		}
+		fetchFavorites().then((data) => {
+			setFavorites(data[0]?.favorites);
+		});
 		getStoreGames().then((games) => {
 			setGames(games);
 		});
-		getFavoriteGames().then((favorites) => {
-			setFavorites(favorites);
-			console.log(favorites);
+		getFavoriteGames().then((favoriteGames) => {
+			setFavoriteGames(favoriteGames);
 		});
 		getOwnedGamesByUser().then((ownedGames) => {
 			setOwnedGames(ownedGames);
 		});
-	}, []);
+	}, [selectedGame]);
 
 	const handleClosePurchaseConfirmation = () => {
 		setShowConfirmation(false);
@@ -178,7 +183,7 @@ export default function Home() {
 				</div>
 				<div className="row-span-3 border-l-4 pl-4">
 					<div className="font-semibold text-lg">
-						Favorites ({favorites.length})
+						Favorites ({favoriteGames.length})
 						<a
 							href="/favorites"
 							className="bg-gray-800 text-white rounded ml-3 p-1"
@@ -187,7 +192,7 @@ export default function Home() {
 						</a>
 					</div>
 					<div className="mt-5">
-						{favorites
+						{favoriteGames
 							.sort((a, b) => b.playtime - a.playtime)
 							.slice(0, 2)
 							.map((game) => (
