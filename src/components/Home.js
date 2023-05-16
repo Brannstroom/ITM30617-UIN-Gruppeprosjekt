@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from "react";
-import StoreGamesList from "./StoreGamesList";
+import { isUserLoggedIn } from "../utils/login";
+import classNames from "classnames";
+import { PurchaseConfirmation } from "./PurchaseConfirmation";
+import { Star } from "../icons/Star";
+import { getOwnedGames } from "../api/game";
+import { purchaseGame } from "../api/purchase";
+
 import {
 	getStoreGames,
 	getFavoriteGames,
 	getOwnedGamesByUser,
 } from "../api/game";
-import { isUserLoggedIn } from "../utils/login";
 
 export default function Home() {
 	const [games, setGames] = useState([]);
 	const [favorites, setFavorites] = useState([]);
 	const [ownedGames, setOwnedGames] = useState([]);
+	const [showConfirmation, setShowConfirmation] = useState(false);
+	const [selectedGame, setSelectedGame] = useState(null);
 
 	useEffect(() => {
 		if (!isUserLoggedIn()) {
@@ -18,53 +25,139 @@ export default function Home() {
 			return;
 		}
 		getStoreGames().then((games) => {
-			setGames(games.slice(0, 3));
+			setGames(games);
 		});
 		getFavoriteGames().then((favorites) => {
 			setFavorites(favorites);
+			console.log(favorites);
 		});
 		getOwnedGamesByUser().then((ownedGames) => {
 			setOwnedGames(ownedGames);
 		});
 	}, []);
 
+	const handleClosePurchaseConfirmation = () => {
+		setShowConfirmation(false);
+	};
+
+	const handlePurchase = (game) => {
+		setSelectedGame(game);
+		setShowConfirmation(true);
+		purchaseGame(game).then(() => {
+			getOwnedGames().then((data) => {
+				setOwnedGames(data);
+			});
+		});
+	};
+
 	const isOwned = (game) => {
 		return ownedGames.some((ownedGame) => ownedGame.id === game.id);
-	}
+	};
 
 	return (
 		<>
-			<div className="flex flex-wrap w-4/5">
-				<div className="basis-full">
+			<div className="grid grid-rows-2 grid-cols-3 gap-4">
+				<div className="col-span-2 row-start-1">
 					<div className="font-semibold text-lg">
 						Store
-						<a href="/games" className="bg-black text-white rounded ml-3 p-1">
+						<a
+							href="/games"
+							className="bg-gray-800 text-white rounded ml-3 p-1"
+						>
 							Visit Store
 						</a>
 					</div>
-					{/* Get 3 games */}
-					<div className="flex justify-center items-center mt-10">
-						<div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-4/5 m-auto">
-							<StoreGamesList games={games} />
+
+					<div className="mt-5 justify-center items-center">
+						<div className="grid grid-cols-2 md:grid-cols-3 gap-4 m-auto">
+							{games
+								.sort((a, b) => new Date(b.released) - new Date(a.released))
+								.slice(0, 3)
+								.map((game) => (
+									<div
+										key={game.id}
+										className={classNames({
+											"shadow-lg hover:shadow-2xl rounded-xl flex flex-col": true,
+										})}
+									>
+										<a href={`/game/${game.slug}`}>
+											<img
+												src={game.background_image}
+												alt={game.name}
+												className="rounded-t-xl w-full h-64 object-cover"
+											/>
+											<div className="font-semibold text-lg ml-2">
+												{game.name}
+											</div>
+										</a>
+
+										<div className="ml-2 flex-grow">
+											<span className="mr-2">
+												{game.genres.map((genre) => (
+													<span
+														key={genre.id}
+														className="bg-gray-200 rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2"
+													>
+														{genre.name}
+													</span>
+												))}
+											</span>
+											<div>{game.released}</div>
+											<Star
+												color={"black"}
+												api={game.id}
+												favoritesIds={favorites}
+											/>
+											<div className="text-gray-500 mt-4">
+												{game.description_raw}
+											</div>
+											<div className="py-2 px-4 flex justify-end text-gray-100">
+												<span className="bg-gray-800 rounded-l-md p-1 break-keep">
+													{(game.id / 10).toFixed(2)} NOK
+												</span>
+												<button
+													className={
+														isOwned(game)
+															? "bg-gray-400 rounded-r-md p-1"
+															: "bg-sky-500 rounded-r-md p-1"
+													}
+													onClick={() => {
+														handlePurchase(game);
+													}}
+													disabled={isOwned(game)}
+												>
+													{isOwned(game) ? "Owned" : "Purchase"}
+												</button>
+											</div>
+
+											{showConfirmation && (
+												<PurchaseConfirmation
+													title={selectedGame.title}
+													onClose={handleClosePurchaseConfirmation}
+												/>
+											)}
+										</div>
+									</div>
+								))}
 						</div>
 					</div>
 				</div>
 
-				<div className="basis-2/3 mt-10">
-					<div className="font-semibold text-lg flex items-center mb-5">
+				<div className="col-span-2 row-start-2 border-t-4">
+					<div className="font-semibold text-lg flex items-center mt-5">
 						<span className="mr-3">Game Library ({ownedGames.length})</span>
-						<a href="/library" className="bg-black text-white rounded p-1">
-							Visit Library 
+						<a href="/library" className="bg-gray-800 text-white rounded p-1">
+							Visit Library
 						</a>
 					</div>
-					<div className="grid grid-cols-2 gap-4">
+					<div className="grid grid-cols-2 gap-4 mt-5">
 						{ownedGames
 							.sort((a, b) => b.playtime - a.playtime)
 							.slice(0, 4)
 							.map((game) => (
 								<div
 									key={game.id}
-									className="bg-gray-100 rounded-lg overflow-hidden flex"
+									className="shadow-lg hover:shadow-2xl rounded-xl"
 								>
 									<a href={`/game/${game.slug}`} className="flex w-full">
 										<img
@@ -83,23 +176,25 @@ export default function Home() {
 							))}
 					</div>
 				</div>
-
-				<div className="basis-1/3 mt-10 border-l border-black pl-4">
-					<div className="font-semibold text-lg mb-5">
+				<div className="row-span-3 border-l-4 pl-4">
+					<div className="font-semibold text-lg">
 						Favorites ({favorites.length})
 						<a
 							href="/favorites"
-							className="bg-black text-white rounded ml-3 p-1"
+							className="bg-gray-800 text-white rounded ml-3 p-1"
 						>
 							Visit Favorites
 						</a>
 					</div>
-					<div>
+					<div className="mt-5">
 						{favorites
 							.sort((a, b) => b.playtime - a.playtime)
 							.slice(0, 2)
 							.map((game) => (
-								<div key={game.id} className="mb-5">
+								<div
+									key={game.id}
+									className="shadow-lg hover:shadow-2xl rounded-xl mb-5"
+								>
 									<a href={`/game/${game.slug}`} className="flex">
 										<img
 											src={game.background_image}
@@ -110,7 +205,11 @@ export default function Home() {
 											<div className="font-semibold text-lg mb-2">
 												{game.name}
 											</div>
-											<div>{isOwned(game) ? "Hours Played: " + game.playtime : null}</div>
+											<div>
+												{isOwned(game)
+													? "Hours Played: " + game.playtime
+													: null}
+											</div>
 										</div>
 									</a>
 								</div>
