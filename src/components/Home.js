@@ -35,7 +35,6 @@ export default function Home() {
 		});
 		getFavoriteGames().then((favoriteGames) => {
 			setFavoriteGames(favoriteGames);
-			console.log(favoriteGames)
 		});
 		getOwnedGamesByUser().then((ownedGames) => {
 			setOwnedGames(ownedGames);
