@@ -37,6 +37,8 @@ export const getStoreGames = async (userGames=false) => {
     } else {
         games = await getGames();
     }
+    if(!games || games.length === 0) return [];
+
   const gameIds = userGames ? games.map((game) => game.game.apiId) : games.map((game) => game.apiId);
 
   const gameIdsString = gameIds.join(",");
