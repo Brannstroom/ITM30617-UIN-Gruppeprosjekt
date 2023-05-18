@@ -24,32 +24,29 @@ export default function Favorites() {
 
 	return (
 		<>
-			<div className="basis-1/3 mt-10">
-				<div className="font-semibold text-lg mb-5">
-					Favorites ({favorites.length})
-				</div>
-				<div>
-					{favorites
-						.sort((a, b) => b.playtime - a.playtime)
-						.map((game) => (
-							<div key={game.id} className="mb-5">
-								<a href={`/game/${game.slug}`} className="flex">
-									<img
-										src={game.background_image}
-										alt={game.name}
-										className="w-1/2 h-64 object-cover rounded-l-xl"
-									/>
-									<div className="p-4 w-1/2 flex flex-col justify-center items-start rounded-r-xl">
-										<div className="font-semibold text-lg mb-2">
-											{game.name}
-										</div>
-										<div>{isOwned(game) ? "Hours Played: " + game.playtime : null}</div>
+			<section className="grid grid-cols-5 gap-4 mt-10">
+				{favorites
+					.sort((a, b) => b.playtime - a.playtime)
+					.map((game) => (
+						<a
+							key={game.id}
+							href={`/game/${game.slug}`}
+							className="flex flex-col bg-white rounded-xl shadow-md overflow-hidden">
+							<img
+								src={game.background_image}
+								alt={game.name}
+								className="w-full h-48 object-cover"/>
+							<div className="p-4">
+								<div className="font-semibold text-lg mb-2">{game.name}</div>
+								{isOwned(game) && (
+									<div className="text-gray-600">
+										Hours Played: {game.playtime}
 									</div>
-								</a>
+								)}
 							</div>
-						))}
-				</div>
-			</div>
+						</a>
+					))}
+			</section>
 		</>
 	);
 }
