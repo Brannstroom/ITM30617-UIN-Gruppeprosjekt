@@ -50,11 +50,11 @@ const Sidebar = () => {
               categories &&
               categories.map((category) => (
                   <a
-                      href={`/games/${category.toLowerCase()}`}
-                      key={category}
+                      href={`/games/${category.slug.current}`}
+                      key={category.slug.current}
                       className={LinkStyleSub}
                   >
-                    {category}
+                    {category.title}
                   </a>
               ))}
           {isUserLoggedIn() && (
