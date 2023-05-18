@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import StoreGamesList from "./StoreGamesList";
-import { getCategoryGames } from "../api/game";
+import { getStoreGames } from "../api/game";
 import { isUserLoggedIn } from "../utils/login";
 import { getCategories } from "../api/category";
 
@@ -21,7 +21,7 @@ export default function Games() {
       setCategories(categories);
     });
     
-    getCategoryGames(category).then((games) => {
+    getStoreGames(false, category).then((games) => {
       setGames(games);
     });
 
@@ -55,6 +55,11 @@ export default function Games() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-4">
         <StoreGamesList games={games} />
       </div>
+      {games && games.length === 0 && (
+          <div className="text-center w-full">
+            <h2 className="text-xl text-gray-600">No games found</h2>
+          </div>
+        )}
     </div>
   );
 }
