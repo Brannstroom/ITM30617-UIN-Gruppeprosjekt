@@ -16,6 +16,7 @@ export default function StoreGamesList({ games }) {
 		if (isUserLoggedIn()) {
 			fetchFavorites().then((data) => {
 				setFavorites(data[0]?.favorites);
+				console.log(favorites);
 			});
 			getOwnedGames()
 				.then((data) => {
