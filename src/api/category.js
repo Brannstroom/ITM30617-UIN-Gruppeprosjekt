@@ -1,18 +1,12 @@
 import { getStoreGames } from "./game"
 
-export const getCategories = async () => {
-    let categories = [];
-    getStoreGames()
-        .then((games) => {
-            games.forEach((game) => {
-                game.genres.forEach((genre) => {
-                    if (!categories.includes(genre.name)) {
-                        categories.push(genre.name);
-                    }
-                });
-            });
-        }
-    );
+import sanityClient from "../client.js";
 
-    return categories;
-}
+export const getCategories = async () => {
+    const query = `*[_type == "category"]{
+        title,
+        slug,
+    }`;
+    const data = await sanityClient.fetch(query);
+    return data;
+};

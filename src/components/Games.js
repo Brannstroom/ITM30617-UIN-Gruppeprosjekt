@@ -42,10 +42,10 @@ export default function Games() {
         {categories.length > 0 ? (
         categories.map((category) => (
           <a
-            href={`/games/${category.toLowerCase()}`}
-            key={category}
+            href={`/games/${category.slug.current}`}
+            key={category.slug.current}
             className="mr-2 hover:underline">
-            {category}
+            {category.title}
           </a>
         ))
       ) : (
