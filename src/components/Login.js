@@ -102,7 +102,7 @@ export default function Login() {
   if (showSignup) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen py-2">
-        <div className="bg-white rounded-lg p-8 shadow-md">
+        <section className="bg-white rounded-lg p-8 shadow-md">
           <h1 className="text-4xl font-bold mb-4">Signup</h1>
           <form className="flex flex-col justify-center items-center" onSubmit={handleUserCreation}>
             <input className={inputClasses} onChange={(event) => setEmail(event.target.value)} type="email" placeholder="Email" />
@@ -119,7 +119,7 @@ export default function Login() {
               Login
             </button>
           </div>
-        </div>
+        </section>
       </div>
     );
   }

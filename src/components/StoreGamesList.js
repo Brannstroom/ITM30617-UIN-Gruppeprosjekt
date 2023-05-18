@@ -48,12 +48,11 @@ export default function StoreGamesList({ games }) {
 			{games
 				.sort((a, b) => new Date(b.released) - new Date(a.released))
 				.map((game) => (
-					<div
+					<article
 						key={game.id}
 						className={classNames({
 							"shadow-lg hover:shadow-2xl rounded-xl flex flex-col": true,
-						})}
-					>
+						})}>
 						<a href={`/game/${game.slug}`}>
 							<img
 								src={game.background_image}
@@ -68,8 +67,7 @@ export default function StoreGamesList({ games }) {
 								{game.genres.map((genre) => (
 									<span
 										key={genre.id}
-										className="bg-gray-200 rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2"
-									>
+										className="bg-gray-200 rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2">
 										{genre.name}
 									</span>
 								))}
@@ -90,8 +88,7 @@ export default function StoreGamesList({ games }) {
 									onClick={() => {
 										handlePurchase(game);
 									}}
-									disabled={isOwned(game)}
-								>
+									disabled={isOwned(game)}>
 									{isOwned(game) ? "Owned" : "Purchase"}
 								</button>
 							</div>
@@ -103,7 +100,7 @@ export default function StoreGamesList({ games }) {
 								/>
 							)}
 						</div>
-					</div>
+					</article>
 				))}
 		</>
 	);

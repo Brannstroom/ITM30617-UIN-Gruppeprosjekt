@@ -24,13 +24,13 @@ export default function Game() {
   return (
 
 
-    <div>
-        <div className="flex flex-col items-center justify-center h-full">
+    <article>
+        <section className="flex flex-col items-center justify-center h-full">
             <div className="max-w8xl bg-white rounded-lg shadow-lg overflow-hidden">
                 <div className="flex flex-col lg:flex-row">
-                    <div className="flex-shrink-0">
+                    <figure className="flex-shrink-0">
                         <img src={game.background_image} alt={game.name} className="w-72 h-96 object-cover rounded-lg lg:rounded-none lg:w-96 lg:h-full" />
-                    </div>
+                    </figure>
                     <div className="flex flex-col justify-between p-4">
                         <div>
                             <h1 className="text-4xl font-bold mb-2">{game.name}</h1>
@@ -72,16 +72,8 @@ export default function Game() {
                     </div>
                 </div>
             </div>
-        </div>
-
-
-
-
-
-
-
-
-    </div>
+        </section>
+    </article>
 
   );
 }

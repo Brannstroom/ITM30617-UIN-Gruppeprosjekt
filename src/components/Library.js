@@ -26,7 +26,7 @@ export default function Library() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mt-4">
                 {games.map((game) => (
-                    <div key={game.id} className="bg-white rounded-lg shadow-md">
+                    <article key={game.id} className="bg-white rounded-lg shadow-md">
                         <a href={`/game/${game.slug}`} className="block">
                             <img
                                 src={game.background_image}
@@ -42,7 +42,7 @@ export default function Library() {
                                 Time played: {game.playtime}
                             </div>
                         </div>
-        </div>
+        </article>
                 ))}
             </div>
         </div>

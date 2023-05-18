@@ -62,7 +62,7 @@ export default function Home() {
 	return (
 		<>
 			<div className="grid grid-rows-2 grid-cols-3 gap-4">
-				<div className="col-span-2 row-start-1">
+				<section className="col-span-2 row-start-1">
 					<div className="font-semibold text-lg">
 						Store
 						<a
@@ -79,7 +79,7 @@ export default function Home() {
 								.sort((a, b) => new Date(b.released) - new Date(a.released))
 								.slice(0, 3)
 								.map((game) => (
-									<div
+									<article
 										key={game.id}
 										className={classNames({
 											"shadow-lg hover:shadow-2xl rounded-xl flex flex-col": true,
@@ -142,13 +142,13 @@ export default function Home() {
 												/>
 											)}
 										</div>
-									</div>
+									</article>
 								))}
 						</div>
 					</div>
-				</div>
+				</section>
 
-				<div className="col-span-2 row-start-2 border-t-4">
+				<section className="col-span-2 row-start-2 border-t-4">
 					<div className="font-semibold text-lg flex items-center mt-5">
 						<span className="mr-3">Game Library ({ownedGames.length})</span>
 						<a href="/library" className="bg-gray-800 text-white rounded p-1">
@@ -160,7 +160,7 @@ export default function Home() {
 							.sort((a, b) => b.playtime - a.playtime)
 							.slice(0, 4)
 							.map((game) => (
-								<div
+								<article
 									key={game.id}
 									className="shadow-lg hover:shadow-2xl rounded-xl"
 								>
@@ -177,11 +177,12 @@ export default function Home() {
 											<div>Hours Played: {game.playtime}</div>
 										</div>
 									</a>
-								</div>
+								</article>
 							))}
 					</div>
-				</div>
-				<div className="row-span-3 border-l-4 pl-4">
+				</section>
+
+				<aside className="row-span-3 border-l-4 pl-4">
 					<div className="font-semibold text-lg">
 						Favorites ({favoriteGames.length})
 						<a
@@ -196,7 +197,7 @@ export default function Home() {
 							.sort((a, b) => b.playtime - a.playtime)
 							.slice(0, 2)
 							.map((game) => (
-								<div
+								<article
 									key={game.id}
 									className="shadow-lg hover:shadow-2xl rounded-xl mb-5"
 								>
@@ -217,10 +218,10 @@ export default function Home() {
 											</div>
 										</div>
 									</a>
-								</div>
+								</article>
 							))}
 					</div>
-				</div>
+				</aside>
 			</div>
 		</>
 	);

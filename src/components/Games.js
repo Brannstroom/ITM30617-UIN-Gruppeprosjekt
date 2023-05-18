@@ -30,11 +30,11 @@ export default function Games() {
 
   return (
     <div>
-      <div className="text-2xl">
+      <header className="text-2xl">
         <h1>Store</h1>
-      </div>
+      </header>
 
-      <div className="mt-4 flex items-center">
+      <section className="mt-4 flex items-center">
         <span className="mr-2 font-medium text-gray-600">Categories:</span>
         <a href="/games" className="mr-2 hover:underline">
           All
@@ -44,15 +44,14 @@ export default function Games() {
           <a
             href={`/games/${category.toLowerCase()}`}
             key={category}
-            className="mr-2 hover:underline"
-          >
+            className="mr-2 hover:underline">
             {category}
           </a>
         ))
       ) : (
         <span>Loading categories...</span>
       )}
-      </div>
+      </section>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-4">
         <StoreGamesList games={games} />
       </div>
