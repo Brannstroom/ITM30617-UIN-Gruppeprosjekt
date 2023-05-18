@@ -11,7 +11,7 @@ import Login from '../Login'
 
 const RoutesComp = () => {
   return (
-    <div className="pl-72 m-4">
+    <div className="m-4">
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/games" element={<Games />} />
