@@ -13,10 +13,9 @@ export default function StoreGamesList({ games }) {
 	const [favorites, setFavorites] = useState([]);
 
 	useEffect(() => {
-		if (isUserLoggedIn()) {
+		if (isUserLoggedIn() && !favorites) {
 			fetchFavorites().then((data) => {
 				setFavorites(data[0]?.favorites);
-				console.log(favorites);
 			});
 			getOwnedGames()
 				.then((data) => {
@@ -24,7 +23,7 @@ export default function StoreGamesList({ games }) {
 				})
 				.catch(console.error);
 		}
-	}, [selectedGame]);
+	}, [selectedGame, favorites]);
 
 	const handleClosePurchaseConfirmation = () => {
 		setShowConfirmation(false);
