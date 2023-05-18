@@ -62,8 +62,8 @@ export default function Home() {
 
 	return (
 		<>
-			<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-				<section className="md:col-span-2">
+			<div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-4">
+				<section className="md:col-span-2 row-start-1">
 					<div className="font-semibold text-lg">
 						Store
 						<a
@@ -149,7 +149,7 @@ export default function Home() {
 					</div>
 				</section>
 
-				<section className="md:col-span-2 border-t-4">
+				<section className="md:col-span-2 border-t-4 row-start-2">
 					<div className="font-semibold text-lg flex items-center mt-5">
 						<span className="mr-3">Game Library ({ownedGames.length})</span>
 						<a href="/library" className="bg-gray-800 text-white rounded p-1">
@@ -183,8 +183,8 @@ export default function Home() {
 					</div>
 				</section>
 
-				<aside className="md:col-span-1">
-					<div className="font-semibold text-lg">
+				<aside className="md:col-span-1 md:row-start-3 lg:row-start-1 row-span-2 border-l-4">
+					<div className="font-semibold text-lg ml-5">
 						Favorites ({favoriteGames.length})
 						<a
 							href="/favorites"
@@ -193,7 +193,7 @@ export default function Home() {
 							Visit Favorites
 						</a>
 					</div>
-					<div className="mt-5">
+					<div className="mt-5 ml-5">
 						{favoriteGames
 							.sort((a, b) => b.playtime - a.playtime)
 							.slice(0, 2)
