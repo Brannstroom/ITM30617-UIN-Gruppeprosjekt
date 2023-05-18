@@ -1,5 +1,3 @@
-import { getStoreGames } from "./game"
-
 import sanityClient from "../client.js";
 
 export const getCategories = async () => {
