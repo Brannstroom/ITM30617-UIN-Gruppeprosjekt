@@ -24,7 +24,7 @@ export default function Favorites() {
 
 	return (
 		<>
-			<section className="grid grid-cols-5 gap-4 mt-10">
+			<section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-10">
 				{favorites
 					.sort((a, b) => b.playtime - a.playtime)
 					.map((game) => (
@@ -35,7 +35,8 @@ export default function Favorites() {
 							<img
 								src={game.background_image}
 								alt={game.name}
-								className="w-full h-48 object-cover"/>
+								className="w-full h-48 object-cover"
+							/>
 							<div className="p-4">
 								<div className="font-semibold text-lg mb-2">{game.name}</div>
 								{isOwned(game) && (
