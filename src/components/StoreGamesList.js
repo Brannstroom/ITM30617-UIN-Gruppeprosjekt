@@ -64,7 +64,9 @@ export default function StoreGamesList({ games }) {
 
 						<div className="ml-2 flex-grow">
 							<span className="mr-2">
-								{game.genres.map((genre) => (
+								{game.genres
+									.slice(0, 3)
+								.map((genre) => (
 									<span
 										key={genre.id}
 										className="bg-gray-200 rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2">
