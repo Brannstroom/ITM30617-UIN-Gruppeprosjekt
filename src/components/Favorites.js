@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {getFavoriteGames, getOwnedGamesByUser} from "../api/game";
+import { getFavoriteGames } from "../api/game";
 import { isUserLoggedIn } from "../utils/login";
 
 export default function Favorites() {
