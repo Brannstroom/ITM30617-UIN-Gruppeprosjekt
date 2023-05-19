@@ -74,7 +74,7 @@ export default function Home() {
 					</div>
 
 					<div className="mt-5 justify-center items-center">
-						<div className="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2  gap-4 m-auto">
+						<div className="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-3  gap-4 m-auto">
 							{games
 								.sort((a, b) => new Date(b.released) - new Date(a.released))
 								.slice(0, 3)
@@ -155,7 +155,7 @@ export default function Home() {
 							Visit Library
 						</a>
 					</div>
-					<div className="grid grid-cols-2 gap-4 mt-5">
+					<div className="grid lg:grid-cols-2 md:grid-cols-1 gap-4 mt-5">
 						{ownedGames
 							.sort((a, b) => b.playtime - a.playtime)
 							.slice(0, 4)
