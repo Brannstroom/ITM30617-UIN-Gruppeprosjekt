@@ -41,7 +41,7 @@ export const PurchaseConfirmation = ({ title, onClose }) => {
             </div>
             <div>
               Please{" "}
-              <a href="/login" className="hover:underline">
+              <a key="login" href="/login" className="hover:underline">
                 login
               </a>{" "}
               or{" "}
