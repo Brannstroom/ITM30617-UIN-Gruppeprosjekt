@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { isUserLoggedIn } from "../utils/login";
 import { Login } from "../icons/Login";
 import { Logout } from "../icons/Logout";

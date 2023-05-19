@@ -20,13 +20,14 @@ const Sidebar = ({onToggle, sidebarCollapsed}) => {
     getCategories().then((categories) => {
       setCategories(categories);
     });
+    // https://stackoverflow.com/questions/2242086/how-to-detect-the-screen-resolution-with-javascript
+    if(window.screen.availWidth <= 768) onToggle(true);
   }, []);
 
   const handleSidebarToggle = () => {
     onToggle(!sidebarCollapsed);
     if(storeDropDown) setStoreDropDown(false);
   }
-
 
   const linkStyles = "mt-5 ml-4 hover:text-gray-400 flex items-center";
   const LinkStyleSub = "ml-8 hover:text-gray-400 mt-2";
