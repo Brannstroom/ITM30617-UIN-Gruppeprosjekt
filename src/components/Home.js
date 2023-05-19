@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { isUserLoggedIn } from "../utils/login";
-import classNames from "classnames";
 import { PurchaseConfirmation } from "./PurchaseConfirmation";
 import { Star } from "../icons/Star";
 import { getOwnedGames } from "../api/game";
@@ -39,7 +38,7 @@ export default function Home() {
 		getOwnedGamesByUser().then((ownedGames) => {
 			setOwnedGames(ownedGames);
 		});
-	}, [selectedGame]);
+	}, [ownedGames.length]);
 
 	const handleClosePurchaseConfirmation = () => {
 		setShowConfirmation(false);
@@ -81,10 +80,7 @@ export default function Home() {
 								.map((game) => (
 									<article
 										key={game.id}
-										className={classNames({
-											"shadow-lg hover:shadow-2xl rounded-xl flex flex-col": true,
-										})}
-									>
+										className="shadow-lg hover:shadow-2xl rounded-xl flex flex-col">
 										<a href={`/game/${game.slug}`}>
 											<img
 												src={game.background_image}
@@ -156,12 +152,12 @@ export default function Home() {
 						</a>
 					</div>
 					<div className="grid lg:grid-cols-2 md:grid-cols-1 gap-4 mt-5">
-						{ownedGames
+						{ownedGames && ownedGames
 							.sort((a, b) => b.playtime - a.playtime)
 							.slice(0, 4)
 							.map((game) => (
 								<article
-									key={game.id}
+									key={game.ref}
 									className="shadow-lg hover:shadow-2xl rounded-xl"
 								>
 									<a href={`/game/${game.slug}`} className="flex w-full">
@@ -193,7 +189,7 @@ export default function Home() {
 						</a>
 					</div>
 					<div className="mt-5 ml-5">
-						{favoriteGames
+						{favoriteGames && favoriteGames
 							.sort((a, b) => b.playtime - a.playtime)
 							.slice(0, 2)
 							.map((game) => (
