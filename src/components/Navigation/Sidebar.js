@@ -20,9 +20,11 @@ const Sidebar = ({onToggle, sidebarCollapsed}) => {
     getCategories().then((categories) => {
       setCategories(categories);
     });
+
     // https://stackoverflow.com/questions/2242086/how-to-detect-the-screen-resolution-with-javascript
     if(window.screen.availWidth <= 768) onToggle(true);
-  }, []);
+    
+  }, [onToggle]);
 
   const handleSidebarToggle = () => {
     onToggle(!sidebarCollapsed);
